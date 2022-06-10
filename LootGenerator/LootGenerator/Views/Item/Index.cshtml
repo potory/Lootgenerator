@@ -1,0 +1,59 @@
+﻿@using LootGenerator.Contracts.Responses.Items
+@using LootGenerator.Extensions
+@model System.Collections.Generic.List<LootGenerator.Contracts.Responses.Items.GetItemResponse>
+
+@{
+    ViewBag.Title = "Предметы";
+    Layout = "_Layout";
+    var instance = new GetItemResponse();
+}
+
+<table class="table">
+    <thead class="table-info">
+    <tr>
+        <th>
+            @Html.LabelFor(x => instance.Id)
+        </th>
+        <th>
+            @Html.LabelFor(x => instance.Name)
+        </th>
+        <th>
+            @Html.LabelFor(x => instance.Description)
+        </th>
+        <th>
+            @Html.LabelFor(x => instance.Link)
+        </th>
+        <th colspan="3">
+            @Html.LabelFor(x => instance.Cost)
+        </th>
+    </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Id
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.Description
+            </td>
+            <td>
+                <a href="@item.Link">@item.Link.Truncate(16)...</a>
+            </td>
+            <td>
+                @item.Cost
+            </td>
+            <td class="col-1">
+                @Html.ActionLink("Изменить", "Edit", "Item", new {id = item.Id}, new {@class = "btn btn-primary col-sm-auto"})
+            </td>
+            <td class="col-1">
+                @Html.ActionLink("Удалить", "Delete", "Item", new {id = item.Id}, new {@class = "btn btn-danger"})
+            </td>
+        </tr>
+    }
+</table>
+
+@Html.ActionLink("Создать предмет", "Create", "Item", new {}, new {@class = "btn btn-primary"})

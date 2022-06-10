@@ -1,3 +1,4 @@
+using LootGenerator.Contracts;
 using LootGenerator.Data;
 using LootGenerator.MappingProfiles;
 using Microsoft.EntityFrameworkCore;

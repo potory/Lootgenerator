@@ -10,8 +10,8 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         // https://habr.com/ru/post/649645/
-        CreateMap<PostItemRequest, Item>();
-        CreateMap<PutItemRequest, Item>();
+        CreateMap<PostItemRequest, Item>().ReverseMap();
+        CreateMap<PutItemRequest, Item>().ReverseMap();
         CreateMap<Item, GetItemResponse>();
     }
 }

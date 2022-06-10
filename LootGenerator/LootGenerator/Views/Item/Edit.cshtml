@@ -1,0 +1,31 @@
+﻿@model LootGenerator.Contracts.Requests.Items.PutItemRequest
+
+@{
+    ViewBag.Title = "Редактирование предмета";
+    Layout = "_Layout";
+}
+
+<form asp-controller="Item" asp-action="Edit" method="post">
+    <input asp-for="Id" type="hidden"/>
+    <p>
+        @Html.LabelFor(x => x.Name)
+        <span asp-validation-for="Name" class="text-danger"></span>
+        <input asp-for="Name" placeholder="Введите название предмета" autocomplete="off" class="form-control"/>
+    </p>
+    <p>
+        @Html.LabelFor(x => x.Description)
+        <span asp-validation-for="Description" class="text-danger"></span>
+        <input asp-for="Description" placeholder="Введите описание предмета" autocomplete="off" class="form-control"/>
+    </p>
+    <p>
+        @Html.LabelFor(x => x.Link)
+        <span asp-validation-for="Link" class="text-danger"></span>
+        <input asp-for="Link" placeholder="Введите ссылку на предмет" autocomplete="off" class="form-control"/>
+    </p>
+    <p>
+        @Html.LabelFor(x => x.Cost)
+        <span asp-validation-for="Cost" class="text-danger"></span>
+        <input asp-for="Cost" placeholder="Введите формулу цены предмета" autocomplete="off" class="form-control"/>
+    </p>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>

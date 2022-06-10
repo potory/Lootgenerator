@@ -4,10 +4,14 @@ namespace LootGenerator.Contracts.Requests.Items;
 
 public class PostItemRequest
 {
-    [Required]
+    [Display(Name = "Название")]
+    [Required(ErrorMessage = "Поле \"Название\" является обязательным")]
     public string Name { get; set; }
+    [Display(Name = "Описание")]
     public string Description { get; set; }
+    [Display(Name = "Ссылка")]
     public string Link { get; set; }
-    [Required]
+    [Display(Name = "Цена")]
+    [Required(ErrorMessage = "Поле \"Цена\" является обязательным")]
     public string Cost { get; set; }
 }
