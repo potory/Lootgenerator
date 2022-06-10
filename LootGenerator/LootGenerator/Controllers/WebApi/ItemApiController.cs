@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using LootGenerator.Contracts;
-using LootGenerator.Contracts.Requests;
-using LootGenerator.Contracts.Responses;
+using LootGenerator.Contracts.Requests.Items;
+using LootGenerator.Contracts.Responses.Items;
 using LootGenerator.Data;
 using LootGenerator.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-namespace LootGenerator.Controllers;
+namespace LootGenerator.Controllers.WebApi;
 
 [ApiController]
 public class ItemApiController : ControllerBase
@@ -19,7 +20,7 @@ public class ItemApiController : ControllerBase
         _context = context;
         _mapper = mapper;
     }
-    
+
     [HttpGet(ApiRoutes.Item.Get)]
     public async Task<IActionResult> Get([FromQuery] int id)
     {
@@ -34,7 +35,13 @@ public class ItemApiController : ControllerBase
 
         return Ok(response);
     }
-    
+
+    [HttpGet(ApiRoutes.Item.List)]
+    public async Task<IActionResult> List()
+    {
+        return Ok(await _context.Items.ToListAsync());
+    }
+
     [HttpPost(ApiRoutes.Item.Post)]
     public async Task<IActionResult> Get([FromBody] PostItemRequest request)
     {
@@ -45,7 +52,7 @@ public class ItemApiController : ControllerBase
 
         return Ok(_mapper.Map<GetItemResponse>(item));
     }
-    
+
     [HttpPut(ApiRoutes.Item.Put)]
     public async Task<IActionResult> Put([FromBody] PutItemRequest request)
     {
@@ -56,7 +63,7 @@ public class ItemApiController : ControllerBase
 
         return Ok(_mapper.Map<GetItemResponse>(item));
     }
-    
+
     [HttpDelete(ApiRoutes.Item.Delete)]
     public async Task<IActionResult> Delete([FromQuery] int id)
     {

@@ -1,4 +1,4 @@
-﻿namespace LootGenerator.Contracts.Responses;
+﻿namespace LootGenerator.Contracts.Responses.Items;
 
 public class GetItemResponse
 {
