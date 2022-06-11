@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using LootGenerator.Validation;
 
 namespace LootGenerator.Models;
 
@@ -19,5 +20,6 @@ public class Item
     [DataType(DataType.Url)]
     public string Link { get; set; }
     [MaxLength(32)]
+    [DiceRoll]
     public string Cost { get; set; }
 }

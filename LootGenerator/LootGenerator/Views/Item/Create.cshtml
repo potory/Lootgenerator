@@ -1,7 +1,7 @@
 ﻿@model LootGenerator.Contracts.Requests.Items.PostItemRequest
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Создание предмета";
     Layout = "_Layout";
 }
 
@@ -14,7 +14,7 @@
     <p>
         @Html.LabelFor(x => x.Description)
         <span asp-validation-for="Description" class="text-danger"></span>
-        <input asp-for="Description" placeholder="Введите описание предмета" autocomplete="off" class="form-control"/>
+        <textarea asp-for="Description" placeholder="Введите описание предмета" autocomplete="off" class="form-control"></textarea>
     </p>
     <p>
         @Html.LabelFor(x => x.Link)

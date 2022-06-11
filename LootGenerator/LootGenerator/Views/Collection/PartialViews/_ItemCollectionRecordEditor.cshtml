@@ -1,0 +1,17 @@
+﻿@model ItemCollectionRecord
+<tr>
+    <input asp-for="RecordId" type="hidden"/>
+    <input asp-for="CollectionId" type="hidden"/>
+    <td>
+        @Html.EditorFor(m => m.ItemId, new {htmlAttributes = new {@class = "w-100"}})
+    </td>
+    <td>
+        @Html.EditorFor(m => m.Chance, new {htmlAttributes = new {@class = "w-100"}})
+    </td>
+    <td>
+        @Html.EditorFor(m => m.Count, new {htmlAttributes = new {@class = "w-100"}})
+    </td>
+    <td>
+        <a href="#" onclick="return this.parentNode.parentNode.remove();" class="btn btn-danger w-100">Удалить</a>
+    </td>
+</tr>

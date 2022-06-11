@@ -1,0 +1,43 @@
+﻿@using LootGenerator.Contracts.Responses.Collections
+@model LootGenerator.Contracts.Responses.Collections.RandomizeCollectionResponse
+
+@{
+    ViewBag.Title = "Рандомизировать коллекцию";
+    Layout = "_Layout";
+    var recordExample = new RandomizeCollectionResponse.ItemRecord();
+}
+
+<h4>@Model.Name</h4>
+<p>@Model.Description</p>
+
+<table class="table">
+    <thead class="table-info">
+    <tr>
+        <th>
+            @Html.LabelFor(x => recordExample.Name)
+        </th>
+        <th class="col-3">
+            @Html.LabelFor(x => recordExample.Count)
+        </th>
+        <th class="col-3">
+            @Html.LabelFor(x => recordExample.Price)
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var record in Model.Records)
+    {
+        <tr>
+            <td>
+                @record.Name
+            </td>
+            <td>
+                @record.Count
+            </td>
+            <td>
+                @record.Price
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

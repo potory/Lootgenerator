@@ -1,0 +1,32 @@
+﻿@model LootGenerator.Models.ModelViews.Collection.CollectionUploadViewModel
+
+@{
+    ViewData["Title"] = "Загрузка коллекции";
+
+}
+
+<h2>Загрузка коллекции</h2>
+
+<form asp-action="Upload" asp-controller="Collection" method="post" enctype="multipart/form-data">
+    <div class="row mt-2">
+        <div class="col-12">
+            <label class="col-form-label">Название коллекции</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    
+    <div class="row mt-2">
+        <div class="col-12">
+            <label class="col-form-label">Выберите файл</label>
+            <input asp-for="File" class="form-control"/>
+            <span asp-validation-for="File" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-12">
+            <button type="submit" class="btn btn-success">Загрузить</button>
+        </div>
+    </div>
+</form>

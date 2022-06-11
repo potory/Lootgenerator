@@ -53,7 +53,7 @@ public class ItemController : Controller
         
         if (!_diceUtility.IsCorrectDiceString(cost))
         {
-            ModelState.AddModelError("Cost", "Значение цены не соответствует формату кубика");
+            ModelState.AddModelError(nameof(request.Cost), "Значение цены не соответствует формату кубика");
             return View(request);
         }
 
@@ -71,10 +71,16 @@ public class ItemController : Controller
     public async Task<IActionResult> Edit([FromQuery] int id)
     {
         var item = await _context.Items.FindAsync(id);
+
+        if (item is null)
+        {
+            return NotFound();
+        }
+        
         var form = _mapper.Map<Item, PutItemRequest>(item);
         return View(form);
     }
-    
+
     [HttpPost]
     public async Task<IActionResult> Edit([FromForm] PutItemRequest request)
     {
@@ -82,6 +88,8 @@ public class ItemController : Controller
         {
             return View(request);
         }
+
+        request.Cost = request.Cost.ToLower();
 
         var item = _mapper.Map<PutItemRequest, Item>(request);
         _context.Items.Update(item);

@@ -14,7 +14,7 @@ public class DiceUtility
             throw new ArgumentException(null, nameof(str));
         }
         
-        return int.TryParse(str, out _) || _regex.IsMatch(str);
+        return int.TryParse(str, out _) || _regex.IsMatch(str.ToLower());
     }
 
     public int Roll(string str, out string calculations)
@@ -29,12 +29,13 @@ public class DiceUtility
             calculations = result.ToString();
             return result;
         }
+
+        str = str.ToLower();
         
         var match = _regex.Match(str);
 
         var count = int.Parse(match.Groups[1].Value);
         var dice = int.Parse(match.Groups[2].Value);
-        var mod = int.Parse(match.Groups[3].Value);
 
         calculations = string.Empty;
 
@@ -51,6 +52,11 @@ public class DiceUtility
             calculations += num.ToString();
         }
 
+        if (!int.TryParse(match.Groups[3].Value, out var mod))
+        {
+            return result;
+        }
+        
         result += mod;
 
         switch (mod)

@@ -1,0 +1,55 @@
+﻿@model List<ItemCollection>
+
+@{
+    ViewBag.Title = "Список коллекций";
+    Layout = "_Layout";
+    var instance = new ItemCollection();
+}
+
+<table class="table">
+    <thead class="table-info">
+    <tr>
+        <th>
+            @Html.LabelFor(x => instance.Id)
+        </th>
+        <th>
+            @Html.LabelFor(x => instance.Name)
+        </th>
+        <th>
+            @Html.LabelFor(x => instance.Description)
+        </th>
+        <th colspan="4">
+            Управление
+        </th>
+    </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Id
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.Description
+            </td>
+            <td class="col-1">
+                @Html.ActionLink("Рандомизировать", "Randomize", "Collection", new {id = item.Id}, new {@class = "btn btn-primary col-sm-auto"})
+            </td>
+            <td class="col-1">
+                @Html.ActionLink("Изменить", "Edit", "Collection", new {id = item.Id}, new {@class = "btn btn-primary col-sm-auto"})
+            </td>
+            <td class="col-1">
+                @Html.ActionLink("Загрузить", "Upload", "Collection", new {id = item.Id}, new {@class = "btn btn-primary"})
+            </td>
+            <td class="col-1">
+                @Html.ActionLink("Удалить", "Delete", "Collection", new {id = item.Id}, new {@class = "btn btn-danger", onclick = $"return confirm('Вы уверены, что хотите удалить коллекцию \"{item.Name}\"?');"})
+            </td>
+        </tr>
+    }
+</table>
+
+@Html.ActionLink("Создать коллекцию", "Create", "Collection", new {}, new {@class = "btn btn-primary"})
+@Html.ActionLink("Загрузить коллекцию", "Upload", "Collection", new {}, new {@class = "btn btn-primary"})

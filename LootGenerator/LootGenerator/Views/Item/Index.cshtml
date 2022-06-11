@@ -3,7 +3,7 @@
 @model System.Collections.Generic.List<LootGenerator.Contracts.Responses.Items.GetItemResponse>
 
 @{
-    ViewBag.Title = "Предметы";
+    ViewBag.Title = "Список предметов";
     Layout = "_Layout";
     var instance = new GetItemResponse();
 }
@@ -23,8 +23,11 @@
         <th>
             @Html.LabelFor(x => instance.Link)
         </th>
-        <th colspan="3">
+        <th>
             @Html.LabelFor(x => instance.Cost)
+        </th>
+        <th colspan="2">
+            Управление
         </th>
     </tr>
     </thead>

@@ -1,0 +1,20 @@
+﻿@model LootGenerator.Contracts.Requests.Collections.PostCollectionRequest
+
+@{
+    ViewBag.Title = "Создать коллекцию";
+    Layout = "_Layout";
+}
+
+<form asp-controller="Collection" asp-action="Create" method="post">
+    <p>
+        @Html.LabelFor(x => x.Name)
+        <span asp-validation-for="Name" class="text-danger"></span>
+        <input asp-for="Name" placeholder="Введите название коллекции" autocomplete="off" class="form-control"/>
+    </p>
+    <p>
+        @Html.LabelFor(x => x.Description)
+        <span asp-validation-for="Description" class="text-danger"></span>
+        <textarea asp-for="Description" placeholder="Введите описание коллекции" autocomplete="off" class="form-control"></textarea>
+    </p>
+    <button type="submit" class="btn btn-primary">Создать</button>
+</form>

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using LootGenerator.Validation;
 
 namespace LootGenerator.Contracts.Requests.Items;
 
@@ -15,5 +16,6 @@ public class PutItemRequest
     public string Link { get; set; }
     [Display(Name = "Цена")]
     [Required(ErrorMessage = "Поле \"Цена\" является обязательным")]
+    [DiceRoll(ErrorMessage = "Неверная формула ролла")]
     public string Cost { get; set; }
 }

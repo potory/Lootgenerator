@@ -1,0 +1,117 @@
+﻿@model ItemCollection
+
+@{
+    ViewBag.Title = "Редактировать коллекцию";
+    Layout = "_Layout";
+}
+
+<form>
+    <input asp-for="Id" type="hidden"/>
+    @Html.LabelFor(m => m.Name):
+    @Html.EditorFor(m => m.Name, new {htmlAttributes = new {@class = "w-100 form-control"}})
+    @Html.LabelFor(m => m.Description):
+    @Html.EditorFor(m => m.Description, new {htmlAttributes = new {@class = "w-100 form-control"}})
+    <br/>
+    <table class="table col-12">
+        <thead class="table-info">
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Шанс (0-1)
+            </th>
+            <th>
+                Количество (ролл-формула)
+            </th>
+            <th>
+                Управление
+            </th>
+        </tr>
+        </thead>
+        <tbody id="editorRows">
+        @foreach (var item in Model.Records)
+        {
+            <partial name="PartialViews/_ItemCollectionRecordEditor" model="item"/>
+        }
+        </tbody>
+    </table>
+    <br/>
+    <a id="addItem" asp-action="BlankItemRecord" asp-controller="Collection">Добавить запись</a>
+    <br/>
+    <br/>
+    <input type="submit" id="submit" value="Сохранить" class="btn btn-primary"/>
+</form>
+
+@section scripts {
+    <script>
+    
+        $("#submit").click(function (e) {
+            e.preventDefault();
+            var formData = new FormData();
+            
+            var modelId = $("#Id").val();
+            var modelName = $("#Name").val();
+            var modelDescription = $("#Description").val();
+            
+            formData.append("Id", modelId);
+            formData.append("Name", modelName);
+            formData.append("Description", modelDescription);
+
+            $("input[name='RecordId']").each(function (i) {
+                var id = $(this).val();
+                formData.append("Records[" + i + "].RecordId", id);
+            });
+            
+            $("input[name='ItemId']").each(function (i) {
+                var itemId = $(this).val();
+                formData.append("Records[" + i + "].ItemId", itemId);
+            });
+            
+                        
+            $("input[name='CollectionId']").each(function (i) {
+                var collectionId = $(this).val();
+                formData.append("Records[" + i + "].CollectionId", collectionId);
+            });
+            
+            $("input[name='Chance']").each(function (i) {
+                var chance = $(this).val();
+                formData.append("Records[" + i + "].Chance", chance);
+
+            });
+            $("input[name='Count']").each(function (i) {
+                var count = $(this).val();
+                formData.append("Records[" + i + "].Count", count);
+
+            });
+
+            console.log(formData)
+            
+            $.ajax({
+                method: 'post',
+                url: "Edit",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function () {
+                    window.location.href = "Index";
+                },
+                error: function (request, status, error){
+                    alert(request.responseText)
+                }
+            });
+
+        }
+        );
+        
+        $("#addItem").click(function () {
+            $.ajax({
+                url: this.href,
+                cache: false,
+                success: function (html) { $("#editorRows").append(html); }
+            });
+            return false;
+        });
+      
+    </script>
+}

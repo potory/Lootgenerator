@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LootGenerator.Contracts.Requests.Collections;
 using LootGenerator.Contracts.Requests.Items;
 using LootGenerator.Contracts.Responses.Items;
 using LootGenerator.Models;
@@ -13,5 +14,6 @@ public class MappingProfile : Profile
         CreateMap<PostItemRequest, Item>().ReverseMap();
         CreateMap<PutItemRequest, Item>().ReverseMap();
         CreateMap<Item, GetItemResponse>();
+        CreateMap<ItemCollection, PostCollectionRequest>().ReverseMap();
     }
 }
