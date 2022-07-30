@@ -2,7 +2,7 @@
 
 namespace LootGenerator.Contracts.Responses.Collections;
 
-public class RandomizeCollectionResponse
+public class RandomizeByChanceResponse
 {
     public string Name { get; set; }
     public string Description { get; set; }

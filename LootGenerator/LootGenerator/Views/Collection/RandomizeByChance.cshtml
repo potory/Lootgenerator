@@ -1,10 +1,10 @@
 ﻿@using LootGenerator.Contracts.Responses.Collections
-@model LootGenerator.Contracts.Responses.Collections.RandomizeCollectionResponse
+@model LootGenerator.Contracts.Responses.Collections.RandomizeByChanceResponse
 
 @{
     ViewBag.Title = "Рандомизировать коллекцию";
     Layout = "_Layout";
-    var recordExample = new RandomizeCollectionResponse.ItemRecord();
+    var recordExample = new RandomizeByChanceResponse.ItemRecord();
 }
 
 <h4>@Model.Name</h4>

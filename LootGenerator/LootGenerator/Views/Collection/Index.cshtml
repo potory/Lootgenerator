@@ -36,7 +36,19 @@
                 @item.Description
             </td>
             <td class="col-1">
-                @Html.ActionLink("Рандомизировать", "Randomize", "Collection", new {id = item.Id}, new {@class = "btn btn-primary col-sm-auto"})
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Рандомизировать
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li>
+                            @Html.ActionLink("По шансу", "RandomizeByChance", "Collection", new {id = item.Id}, new {@class = "dropdown-item"})
+                        </li>
+                        <li>
+                            @Html.ActionLink("По количеству", "RandomizeByCount", "Collection", new {id = item.Id, count=5}, new {@class = "dropdown-item"})
+                        </li>
+                    </ul>
+                </div>
             </td>
             <td class="col-1">
                 @Html.ActionLink("Изменить", "Edit", "Collection", new {id = item.Id}, new {@class = "btn btn-primary col-sm-auto"})

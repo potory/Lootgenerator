@@ -1,0 +1,29 @@
+﻿@model LootGenerator.Contracts.Responses.Collections.RandomizeByCountResponse
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>@Model.Name</h2>
+
+<form asp-controller="Collection" asp-action="RandomizeByCount" method="get">
+    <input asp-for="Id" type="hidden"/>
+    <p>
+        @Html.LabelFor(x => x.Count)
+        <span asp-validation-for="Count" class="text-danger"></span>
+        <input asp-for="Count" placeholder="Количество" autocomplete="off" class="form-control"/>
+    </p>
+    <button type="submit" class="btn btn-primary">Рандомизировать</button>
+</form>
+
+<table class="table col-12">
+    @foreach (var item in Model.Records)
+    {
+        <tr>
+            <td>
+            @item.Name
+            </td>
+        </tr>
+    }
+</table>

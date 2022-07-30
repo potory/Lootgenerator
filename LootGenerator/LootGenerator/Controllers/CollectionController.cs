@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Collections.Immutable;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using AutoMapper;
@@ -137,7 +138,8 @@ public class CollectionController : Controller
         return Ok();
     }
 
-    public async Task<IActionResult> Randomize(int id)
+    [HttpGet]
+    public async Task<IActionResult> RandomizeByChance(int id)
     {
         var collection = await _context.Collections
             .Include(collection => collection.Records)
@@ -151,7 +153,7 @@ public class CollectionController : Controller
 
         var rand = new Random();
         
-        var response = new RandomizeCollectionResponse
+        var response = new RandomizeByChanceResponse
         {
             Name = collection.Name,
             Description = collection.Description
@@ -169,18 +171,51 @@ public class CollectionController : Controller
             var price = _dice.Roll(record.Item.Cost, out var priceCalcs);
             var count = _dice.Roll(record.Count, out var countCalcs);
             
-            var responseRecord = new RandomizeCollectionResponse.ItemRecord
+            var responseRecord = new RandomizeByChanceResponse.ItemRecord
             (
                 id: record.Item.Id,
                 name: record.Item.Name,
-                price: $"{record.Item.Cost} = {priceCalcs} = {price}",
-                count: $"{record.Count} = {countCalcs} = {count}"
+                price: price.ToString(),
+                count: count.ToString()
                 );
             
             response.Records.Add(responseRecord);
         }
 
         return View(response);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> RandomizeByCount([FromQuery] int id, [FromQuery] int count)
+    {
+        var collection = await _context.Collections
+            .Include(collection => collection.Records)
+            .ThenInclude(x => x.Item)
+            .FirstOrDefaultAsync(collection => collection.Id == id);
+
+        if (collection is null)
+        {
+            return NotFound();
+        }
+
+        var rand = new Random();
+
+        var items = collection.Records.Select(x => x.Item).ToImmutableArray();
+        var itemsCount = items.Length;
+
+        var reponse = new RandomizeByCountResponse()
+        {
+            Id = collection.Id,
+            Name = collection.Name,
+            Count = count
+        };
+
+        for (int i = 0; i < count; i++)
+        {
+            reponse.Records.Add(new RandomizeByCountResponse.Record(items[rand.Next(0, itemsCount)].Name));
+        }
+
+        return View(reponse);
     }
     
     [HttpGet]
@@ -280,43 +315,26 @@ public class CollectionController : Controller
     
     private static float ConvertPercents(string percents)
     {
-        try
-        {
-            percents = percents.TrimEnd('%', ' ');
-            var num = float.Parse(percents, CultureInfo.InvariantCulture) / 100f;
-            return num;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+        percents = percents.TrimEnd('%', ' ');
+        var num = float.Parse(percents, CultureInfo.InvariantCulture) / 100f;
+        return num;
     }
 
     private static string ConvertDice(string dice)
     {
-        try
-        {
-            
-            var price = ReplaceWhitespace(dice, string.Empty);
+        var price = ReplaceWhitespace(dice, string.Empty);
 
-            if (price[0] == 'd' || price[0] == 'к')
-            {
-                price = $"1{price}";
-            }
-
-            return price;
-        }
-        catch (Exception e)
+        if (price[0] == 'd' || price[0] == 'к')
         {
-            Console.WriteLine(e);
-            throw;
+            price = $"1{price}";
         }
+
+        return price;
     }
 
-    private static readonly Regex RegexWhitespace = new Regex(@"\s+");
-    
-    public static string ReplaceWhitespace(string input, string replacement) 
+    private static readonly Regex RegexWhitespace = new(@"\s+");
+
+    private static string ReplaceWhitespace(string input, string replacement) 
     {
         return RegexWhitespace.Replace(input, replacement);
     }

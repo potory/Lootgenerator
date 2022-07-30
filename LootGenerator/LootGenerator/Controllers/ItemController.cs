@@ -1,13 +1,9 @@
-﻿using System.Text.RegularExpressions;
-using AutoMapper;
-using LootGenerator.Contracts;
+﻿using AutoMapper;
 using LootGenerator.Contracts.Requests.Items;
 using LootGenerator.Contracts.Responses.Items;
 using LootGenerator.Data;
 using LootGenerator.Models;
 using LootGenerator.Utilities;
-using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
